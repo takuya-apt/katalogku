@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Warung Seduh Rasa — Katalog menu makanan rumahan, camilan, dan minuman hangat/dingin untuk semua kalangan. Pesan praktis via WhatsApp atau ambil di tempat." />
+  <title>Warung Seduh Rasa — Makanan Rumahan &amp; Minuman Hangat</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Lora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- 1. Scroll Progress Bar -->
+  <div id="scroll-progress" role="progressbar" aria-label="Progres gulir halaman" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+  <!-- 2. Sticky Navbar Adaptif -->
+  <header id="main-header" class="sticky top-0 z-40 bg-white border-b border-warm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="navbar-inner" class="flex items-center justify-between py-3.5 transition-all duration-200">
+        <!-- Logo -->
+        <a href="#beranda" class="flex items-center space-x-3 rounded-2xl p-1" aria-label="Beranda Warung Seduh Rasa">
+          <div class="w-11 h-11 rounded-2xl bg-coffee flex items-center justify-center shadow-sm flex-shrink-0">
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              <line x1="6" y1="1" x2="6" y2="4"></line>
+              <line x1="10" y1="1" x2="10" y2="4"></line>
+              <line x1="14" y1="1" x2="14" y2="4"></line>
+            </svg>
+          </div>
+          <div>
+            <span class="block font-serif-title text-lg sm:text-xl font-bold text-coffee leading-tight">Warung Seduh Rasa</span>
+            <span class="block text-xs sm:text-sm text-muted-warm font-medium">Rumahan &amp; Hangat</span>
+          </div>
+        </a>
+
+        <!-- Navigasi Desktop -->
+        <nav class="hidden md:flex items-center space-x-1" aria-label="Navigasi Utama">
+          <a href="#beranda" class="btn-touch px-4 py-2 rounded-2xl text-base font-semibold text-coffee hover:bg-warm-surface">Beranda</a>
+          <a href="#menu" class="btn-touch px-4 py-2 rounded-2xl text-base font-semibold text-coffee hover:bg-warm-surface">Menu</a>
+          <a href="#cara-pesan" class="btn-touch px-4 py-2 rounded-2xl text-base font-semibold text-coffee hover:bg-warm-surface">Cara Pesan</a>
+          <a href="#lokasi" class="btn-touch px-4 py-2 rounded-2xl text-base font-semibold text-coffee hover:bg-warm-surface">Lokasi</a>
+        </nav>
+
+        <!-- Tombol Keranjang & Toggle Mobile -->
+        <div class="flex items-center space-x-2">
+          <button
+            id="btn-open-cart"
+            type="button"
+            class="btn-touch relative px-4 py-2 rounded-2xl bg-coffee text-white font-bold text-base shadow-sm"
+            aria-label="Buka Keranjang Belanja"
+          >
+            <svg class="w-5 h-5 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="hidden sm:inline">Keranjang</span>
+            <span id="cart-badge" class="sm:ml-2 inline-flex items-center justify-center px-2.5 py-0.5 text-sm font-extrabold rounded-full bg-white text-coffee">0</span>
+          </button>
+
+          <button
+            id="btn-mobile-menu"
+            type="button"
+            class="btn-touch md:hidden rounded-2xl bg-warm-surface text-coffee border border-warm px-3"
+            aria-label="Buka Menu Navigasi"
+            aria-expanded="false"
+            aria-controls="mobile-nav-panel"
+          >
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel Navigasi Mobile -->
+      <nav id="mobile-nav-panel" class="hidden md:hidden pb-4 pt-2 border-t border-warm space-y-1.5" aria-label="Navigasi Mobile">
+        <a href="#beranda" class="mobile-nav-link btn-touch w-full justify-start px-4 rounded-2xl text-base font-semibold text-coffee hover:bg-warm-surface">Beranda</a>
+        <a href="#menu" class="mobile-nav-link btn-touch w-full justify-start px-4 rounded-2xl text-base font-semibold text-coffee hover:bg-warm-surface">Daftar Menu</a>
+        <a href="#cara-pesan" class="mobile-nav-link btn-touch w-full justify-start px-4 rounded-2xl text-base font-semibold text-coffee hover:bg-warm-surface">Cara Pesan</a>
+        <a href="#lokasi" class="mobile-nav-link btn-touch w-full justify-start px-4 rounded-2xl text-base font-semibold text-coffee hover:bg-warm-surface">Lokasi &amp; Jam Buka</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    <!-- ==================== 3. HERO SECTION + PARALLAX FOTO ASLI ==================== -->
+    <section id="beranda" class="bg-warm-surface border-b border-warm py-12 sm:py-16 lg:py-20 overflow-hidden">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <!-- Teks Hero -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-white border border-warm shadow-sm">
+              <span class="w-3 h-3 rounded-full bg-green-600 mr-2.5 flex-shrink-0"></span>
+              <span class="text-sm sm:text-base font-bold text-coffee">Buka Setiap Hari &bull; 07.00 – 21.00 WIB</span>
+            </div>
+
+            <h1 class="font-serif-title text-3xl sm:text-4xl lg:text-5xl font-bold text-coffee leading-tight">
+              Masakan Rumahan &amp; Seduhan Hangat untuk Semua Kalangan
+            </h1>
+
+            <p class="text-base sm:text-lg text-muted-warm leading-relaxed">
+              Dari nasi goreng kampung, soto ayam kuah kuning ramah lansia, camilan renyah, hingga kopi susu aren &amp; wedang jahe madu. Pesan praktis via WhatsApp atau ambil di tempat.
+            </p>
+
+            <div class="flex flex-wrap gap-3.5 pt-1">
+              <a href="#menu" class="btn-touch px-7 py-3.5 rounded-2xl bg-coffee text-white font-bold text-base sm:text-lg shadow-md">
+                Lihat Menu Sekarang
+                <svg class="w-5 h-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+              </a>
+              <a href="#cara-pesan" class="btn-touch px-6 py-3.5 rounded-2xl bg-white border-2 border-coffee text-coffee font-bold text-base sm:text-lg hover:bg-warm-surface">
+                Cara Pesan
+              </a>
+            </div>
+          </div>
+
+          <!-- Foto Banner Hero Asli Pexels dengan Parallax Halus -->
+          <div class="lg:col-span-6">
+            <div id="hero-parallax-card" class="relative rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-img-base aspect-[4/3]">
+              <img
+                id="hero-banner-img"
+                src="https://images.pexels.com/photos/37179942/pexels-photo-37179942.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Hidangan masakan rumahan dan minuman hangat khas Warung Seduh Rasa"
+                referrerpolicy="no-referrer"
+                decoding="async"
+                class="food-img w-full h-full object-cover"
+              />
+              <div class="absolute bottom-3 left-3 right-3 sm:left-4 sm:right-auto bg-white bg-opacity-95 backdrop-blur-sm px-4 py-2.5 rounded-2xl shadow-md border border-warm flex items-center space-x-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-warm-accent flex-shrink-0"></span>
+                <span class="text-xs sm:text-sm font-bold text-coffee">Masak Segar Setiap Hari &bull; Halal &amp; Higienis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. ANIMATED COUNTER KEPERCAYAAN ==================== -->
+    <section class="bg-white py-10 sm:py-12 border-b border-warm" aria-label="Keunggulan Warung Seduh Rasa">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <!-- Counter 1 -->
+          <div class="reveal bg-warm-surface rounded-2xl p-5 sm:p-6 border border-warm text-center">
+            <p class="font-serif-title text-2xl sm:text-3xl font-bold text-coffee">
+              <span class="counter-num" data-target="15" data-decimals="0">15</span>+
+            </p>
+            <p class="text-sm sm:text-base text-muted-warm font-semibold mt-1">Menu Rumahan</p>
+          </div>
+          <!-- Counter 2 -->
+          <div class="reveal bg-warm-surface rounded-2xl p-5 sm:p-6 border border-warm text-center">
+            <p class="font-serif-title text-2xl sm:text-3xl font-bold text-coffee">
+              <span class="counter-num" data-target="100" data-decimals="0">100</span>%
+            </p>
+            <p class="text-sm sm:text-base text-muted-warm font-semibold mt-1">Bahan Segar</p>
+          </div>
+          <!-- Counter 3 -->
+          <div class="reveal bg-warm-surface rounded-2xl p-5 sm:p-6 border border-warm text-center">
+            <p class="font-serif-title text-2xl sm:text-3xl font-bold text-coffee">
+              <span class="counter-num" data-target="4.9" data-decimals="1">4.9</span>/5
+            </p>
+            <p class="text-sm sm:text-base text-muted-warm font-semibold mt-1">Rating Pelanggan</p>
+          </div>
+          <!-- Counter 4 -->
+          <div class="reveal bg-warm-surface rounded-2xl p-5 sm:p-6 border border-warm text-center">
+            <p class="font-serif-title text-2xl sm:text-3xl font-bold text-coffee">
+              <span class="counter-num" data-target="10" data-decimals="0">10</span> Menit
+            </p>
+            <p class="text-sm sm:text-base text-muted-warm font-semibold mt-1">Rata-rata Siap Saji</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. KATALOG 15 MENU INTERAKTIF ==================== -->
+    <section id="menu" class="py-14 sm:py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header Katalog & Pencarian -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-6 reveal">
+          <div>
+            <span class="inline-block px-3.5 py-1 rounded-full bg-warm-surface border border-warm text-coffee font-bold text-sm mb-2">Katalog Lengkap</span>
+            <h2 class="font-serif-title text-2xl sm:text-4xl font-bold text-coffee">Daftar Menu Pilihan</h2>
+            <p class="text-base text-muted-warm mt-1.5">Pilih kategori atau ketik nama makanan, rasa, dan minuman favorit Anda.</p>
+          </div>
+
+          <div class="w-full md:w-96 relative">
+            <label for="search-input" class="sr-only">Cari menu makanan atau minuman</label>
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Cari soto, kopi, rendang, tidak pedas..."
+              autocomplete="off"
+              class="w-full pl-12 pr-12 py-3.5 rounded-2xl border-2 border-warm bg-warm-surface bg-opacity-50 text-base text-coffee placeholder-gray-500 focus:bg-white focus:border-coffee"
+            />
+            <svg class="w-5 h-5 text-coffee absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <button
+              id="btn-clear-search"
+              type="button"
+              class="hidden absolute right-2 top-1/2 transform -translate-y-1/2 w-9 h-9 rounded-xl bg-white border border-warm text-coffee font-bold text-lg items-center justify-center hover:bg-warm-surface"
+              aria-label="Bersihkan pencarian"
+            >&times;</button>
+          </div>
+        </div>
+
+        <!-- Bar Filter Kategori -->
+        <div class="bg-warm-surface p-3 sm:p-4 rounded-2xl border border-warm mb-6">
+          <div id="category-filters" class="flex flex-wrap gap-2.5" role="tablist" aria-label="Filter Kategori Menu"></div>
+        </div>
+
+        <!-- Badge Jumlah Menu Ditemukan -->
+        <div class="flex items-center justify-between mb-6">
+          <span id="menu-count-badge" class="inline-flex items-center px-4 py-1.5 rounded-full bg-warm-surface border border-warm text-sm sm:text-base font-bold text-coffee" aria-live="polite"></span>
+        </div>
+
+        <!-- Grid Kartu Menu -->
+        <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+        <!-- State Kosong Pencarian -->
+        <div id="empty-search-state" class="hidden text-center py-14 px-6 bg-warm-surface rounded-2xl border border-warm">
+          <p class="font-serif-title text-xl font-bold text-coffee mb-2">Menu tidak ditemukan</p>
+          <p class="text-base text-muted-warm mb-6">Coba kata kunci lain atau tampilkan kembali seluruh menu kami.</p>
+          <button id="btn-reset-filter" type="button" class="btn-touch px-7 py-3 rounded-2xl bg-coffee text-white font-bold text-base">
+            Tampilkan Semua Menu
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 6. CARA PESAN PRAKTIS ==================== -->
+    <section id="cara-pesan" class="py-14 sm:py-16 bg-warm-surface border-t border-b border-warm">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-10 reveal">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-white border border-warm text-coffee font-bold text-sm mb-2">Mudah &amp; Praktis</span>
+          <h2 class="font-serif-title text-2xl sm:text-3xl font-bold text-coffee">Cara Pesan di Warung Seduh Rasa</h2>
+          <p class="text-base text-muted-warm mt-2">Cukup 3 langkah sederhana, tanpa perlu daftar akun atau unduh aplikasi.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="reveal bg-white p-6 sm:p-7 rounded-2xl border border-warm shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-coffee text-white font-extrabold text-xl flex items-center justify-center mb-4">1</div>
+            <h3 class="text-xl font-extrabold text-coffee mb-2">Pilih Menu Favorit</h3>
+            <p class="text-base text-muted-warm leading-relaxed">Tekan tombol <strong>+ Tambah</strong> pada makanan atau minuman pilihan Anda. Lihat profil rasa, pedas, dan kafein lewat tombol Detail.</p>
+          </div>
+          <div class="reveal bg-white p-6 sm:p-7 rounded-2xl border border-warm shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-coffee text-white font-extrabold text-xl flex items-center justify-center mb-4">2</div>
+            <h3 class="text-xl font-extrabold text-coffee mb-2">Atur di Keranjang</h3>
+            <p class="text-base text-muted-warm leading-relaxed">Buka <strong>Keranjang</strong>, sesuaikan jumlah porsi, pilih <em>Ambil di Tempat</em> atau <em>Pesan Antar</em>, lalu isi nama &amp; catatan khusus.</p>
+          </div>
+          <div class="reveal bg-white p-6 sm:p-7 rounded-2xl border border-warm shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-coffee text-white font-extrabold text-xl flex items-center justify-center mb-4">3</div>
+            <h3 class="text-xl font-extrabold text-coffee mb-2">Kirim via WhatsApp</h3>
+            <p class="text-base text-muted-warm leading-relaxed">Tekan <strong>Pesan via WhatsApp</strong>. Rekap pesanan dan total harga langsung tersusun otomatis dan siap dikirim ke kasir kami.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 7. LOKASI & JAM BUKA ==================== -->
+    <section id="lokasi" class="py-14 sm:py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <div class="lg:col-span-7 reveal bg-warm-surface rounded-2xl p-6 sm:p-8 border border-warm flex flex-col justify-between">
+            <div>
+              <span class="inline-block px-3.5 py-1 rounded-full bg-white border border-warm text-coffee font-bold text-sm mb-3">Kunjungi Kami</span>
+              <h2 class="font-serif-title text-2xl sm:text-3xl font-bold text-coffee mb-3">Lokasi &amp; Kontak</h2>
+              <p class="text-base text-muted-warm leading-relaxed mb-6">
+                Tempat duduk nyaman, akses ramah lansia tanpa tangga tinggi, dan area parkir luas di depan warung.
+              </p>
+
+              <div class="space-y-4">
+                <div class="flex items-start space-x-3.5 bg-white p-4 rounded-2xl border border-warm">
+                  <svg class="w-6 h-6 text-coffee flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <div>
+                    <p class="font-bold text-coffee text-base">Alamat Warung Seduh Rasa</p>
+                    <p id="store-address-text" class="text-base text-muted-warm">Jl. Melati Raya No. 45, Medan Baru, Kota Medan 20153</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-3.5 bg-white p-4 rounded-2xl border border-warm">
+                  <svg class="w-6 h-6 text-coffee flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                  <div>
+                    <p class="font-bold text-coffee text-base">WhatsApp Pemesanan</p>
+                    <p id="store-wa-text" class="text-base text-muted-warm">0812-3456-7890</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3 mt-6 pt-4 border-t border-warm">
+              <button id="btn-copy-address" type="button" class="btn-touch px-5 py-3 rounded-2xl bg-coffee text-white font-bold text-sm sm:text-base shadow-sm">
+                Salin Alamat
+              </button>
+              <button id="btn-copy-wa" type="button" class="btn-touch px-5 py-3 rounded-2xl bg-white border-2 border-coffee text-coffee font-bold text-sm sm:text-base hover:bg-warm-surface">
+                Salin Nomor WA
+              </button>
+              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="btn-touch px-5 py-3 rounded-2xl bg-white border border-warm text-coffee font-bold text-sm sm:text-base hover:bg-gray-50">
+                Chat WhatsApp Langsung
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 reveal bg-coffee text-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-lg">
+            <div>
+              <h3 class="font-serif-title text-2xl font-bold mb-4">Jam Operasional</h3>
+              <ul class="space-y-3.5 text-base">
+                <li class="flex justify-between pb-3 border-b border-white border-opacity-20">
+                  <span class="text-gray-200">Senin – Jumat</span>
+                  <span class="font-bold">07.00 – 21.00 WIB</span>
+                </li>
+                <li class="flex justify-between pb-3 border-b border-white border-opacity-20">
+                  <span class="text-gray-200">Sabtu – Minggu</span>
+                  <span class="font-bold">07.00 – 22.00 WIB</span>
+                </li>
+                <li class="flex justify-between pb-3 border-b border-white border-opacity-20">
+                  <span class="text-gray-200">Hari Libur Nasional</span>
+                  <span class="font-bold">08.00 – 21.00 WIB</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-6 p-4 rounded-2xl bg-white bg-opacity-10 border border-white border-opacity-20">
+              <p class="text-sm sm:text-base leading-relaxed text-gray-100">
+                <strong>Tips:</strong> Untuk pesanan keluarga di atas 5 porsi, disarankan pesan 20 menit lebih awal via WhatsApp agar makanan siap hangat saat Anda tiba.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-warm-surface border-t border-warm py-10 pb-28 sm:pb-24">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-5 border-b border-warm">
+        <div>
+          <span class="font-serif-title text-xl font-bold text-coffee">Warung Seduh Rasa</span>
+          <p class="text-sm sm:text-base text-muted-warm mt-1">Jl. Melati Raya No. 45, Medan Baru &bull; Buka Setiap Hari 07.00 – 21.00 WIB</p>
+        </div>
+        <div class="flex flex-wrap gap-4 text-sm sm:text-base font-semibold text-coffee">
+          <a href="#beranda" class="hover:underline">Beranda</a>
+          <a href="#menu" class="hover:underline">Menu</a>
+          <a href="#cara-pesan" class="hover:underline">Cara Pesan</a>
+          <a href="#lokasi" class="hover:underline">Lokasi</a>
+        </div>
+      </div>
+      <p class="text-sm text-muted-warm">&copy; <span id="footer-year">2026</span> Warung Seduh Rasa. Seluruh hak cipta dilindungi.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== FLOATING CART BAR (SAAT KERANJANG >= 1 ITEM) ==================== -->
+  <div id="floating-cart-bar" class="fixed bottom-4 left-4 right-4 sm:left-1/2 sm:right-auto sm:transform sm:-translate-x-1/2 sm:w-full sm:max-w-md z-40 floating-transition floating-hidden">
+    <button
+      id="btn-floating-cart"
+      type="button"
+      class="btn-touch w-full px-5 py-3.5 rounded-2xl bg-coffee text-white shadow-2xl flex items-center justify-between font-bold text-base border-2 border-white"
+    >
+      <span class="flex items-center space-x-2.5">
+        <span id="floating-cart-count" class="px-2.5 py-0.5 rounded-full bg-white text-coffee text-sm font-extrabold">0</span>
+        <span>Buka Keranjang</span>
+      </span>
+      <span id="floating-cart-total" class="font-extrabold">Rp 0</span>
+    </button>
+  </div>
+
+  <!-- ==================== TOMBOL BACK TO TOP (SCROLL > 400px) ==================== -->
+  <button
+    id="btn-back-to-top"
+    type="button"
+    aria-label="Kembali ke atas"
+    class="btn-touch fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-40 w-12 h-12 rounded-2xl bg-white border-2 border-coffee text-coffee shadow-lg hover:bg-warm-surface floating-transition floating-hidden"
+  >
+    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+  </button>
+
+  <!-- ==================== MODAL DETAIL MENU ==================== -->
+  <div id="detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black bg-opacity-55" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-warm overflow-hidden max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between px-6 py-4 bg-warm-surface border-b border-warm">
+        <h3 id="detail-modal-title" class="font-serif-title text-xl font-bold text-coffee pr-4">Detail Menu</h3>
+        <button id="btn-close-detail" type="button" class="btn-touch rounded-2xl bg-white border border-warm text-coffee font-bold text-2xl px-3" aria-label="Tutup Detail Menu">&times;</button>
+      </div>
+      <div id="detail-modal-body" class="p-6 overflow-y-auto space-y-4"></div>
+    </div>
+  </div>
+
+  <!-- ==================== DRAWER KERANJANG BELANJA ==================== -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 hidden justify-end bg-black bg-opacity-55" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title">
+    <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl animate-drawer">
+      <div class="flex items-center justify-between px-5 py-4 bg-warm-surface border-b border-warm">
+        <div>
+          <h3 id="cart-drawer-title" class="font-serif-title text-xl font-bold text-coffee">Keranjang Belanja</h3>
+          <p id="cart-subtitle" class="text-sm text-muted-warm">0 item dipilih</p>
+        </div>
+        <button id="btn-close-cart" type="button" class="btn-touch rounded-2xl bg-white border border-warm text-coffee font-bold text-2xl px-3" aria-label="Tutup Keranjang">&times;</button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-5 space-y-5">
+        <div id="cart-items-container" class="space-y-3"></div>
+
+        <div id="cart-empty-state" class="text-center py-10 px-4 bg-warm-surface rounded-2xl border border-warm">
+          <p class="font-serif-title text-lg font-bold text-coffee mb-1">Keranjang masih kosong</p>
+          <p class="text-base text-muted-warm mb-5">Yuk, pilih makanan rumahan atau minuman hangat favorit Anda.</p>
+          <button id="btn-browse-from-cart" type="button" class="btn-touch px-6 py-3 rounded-2xl bg-coffee text-white font-bold text-base">
+            Pilih Menu Sekarang
+          </button>
+        </div>
+
+        <form id="checkout-form" class="hidden space-y-4 pt-4 border-t border-warm" novalidate>
+          <div>
+            <span class="block text-base font-bold text-coffee mb-2">Metode Pemesanan</span>
+            <div class="grid grid-cols-2 gap-2.5">
+              <button type="button" id="method-pickup" class="btn-touch rounded-2xl border-2 font-bold text-sm sm:text-base px-3 py-2.5">Ambil di Tempat</button>
+              <button type="button" id="method-delivery" class="btn-touch rounded-2xl border-2 font-bold text-sm sm:text-base px-3 py-2.5">Pesan Antar</button>
+            </div>
+          </div>
+
+          <div>
+            <label for="customer-name" class="block text-base font-bold text-coffee mb-1">Nama Pemesan <span class="text-red-600">*</span></label>
+            <input
+              id="customer-name"
+              type="text"
+              maxlength="60"
+              placeholder="Contoh: Ibu Sari / Budi"
+              class="w-full px-4 py-3 rounded-2xl border-2 border-warm text-base text-coffee focus:border-coffee"
+            />
+            <p id="error-name" class="hidden text-sm font-semibold text-red-600 mt-1"></p>
+          </div>
+
+          <div id="address-field-wrapper" class="hidden">
+            <label for="customer-address" class="block text-base font-bold text-coffee mb-1">Alamat Pengantaran <span class="text-red-600">*</span></label>
+            <textarea
+              id="customer-address"
+              rows="2"
+              maxlength="200"
+              placeholder="Tuliskan nama jalan, nomor rumah, dan patokan..."
+              class="w-full px-4 py-3 rounded-2xl border-2 border-warm text-base text-coffee focus:border-coffee"
+            ></textarea>
+            <p id="error-address" class="hidden text-sm font-semibold text-red-600 mt-1"></p>
+          </div>
+
+          <div>
+            <label for="customer-notes" class="block text-base font-bold text-coffee mb-1">Catatan Pesanan (Opsional)</label>
+            <textarea
+              id="customer-notes"
+              rows="2"
+              maxlength="180"
+              placeholder="Misal: tanpa cabai, sedikit es, sambal dipisah..."
+              class="w-full px-4 py-3 rounded-2xl border-2 border-warm text-base text-coffee focus:border-coffee"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div id="cart-footer" class="hidden p-5 bg-warm-surface border-t border-warm space-y-3">
+        <div class="flex justify-between text-lg font-extrabold text-coffee">
+          <span>Total Bayar</span>
+          <span id="cart-total">Rp 0</span>
+        </div>
+
+        <button id="btn-checkout-wa" type="button" class="btn-touch w-full py-3.5 px-4 rounded-2xl bg-coffee text-white font-bold text-base shadow-md">
+          Pesan via WhatsApp
+        </button>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <button id="btn-copy-recap" type="button" class="btn-touch px-3 py-2.5 rounded-2xl bg-white border border-coffee text-coffee font-bold text-sm hover:bg-gray-50">
+            Salin Rekap
+          </button>
+          <button id="btn-clear-cart" type="button" class="btn-touch px-3 py-2.5 rounded-2xl bg-white border border-red-300 text-red-700 font-bold text-sm hover:bg-red-50">
+            Kosongkan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL KONFIRMASI KUSTOM (BUKAN confirm()) ==================== -->
+  <div id="confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black bg-opacity-55" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-warm space-y-4">
+      <h3 id="confirm-title" class="font-serif-title text-xl font-bold text-coffee">Kosongkan Keranjang?</h3>
+      <p class="text-base text-muted-warm">Semua menu yang sudah Anda pilih di keranjang akan dihapus.</p>
+      <div class="grid grid-cols-2 gap-3 pt-2">
+        <button id="btn-cancel-clear" type="button" class="btn-touch rounded-2xl bg-warm-surface text-coffee font-bold text-base">Batal</button>
+        <button id="btn-confirm-clear" type="button" class="btn-touch rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-base">Ya, Kosongkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION (BUKAN alert()) ==================== -->
+  <div id="toast-container" class="fixed bottom-20 sm:bottom-20 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none w-11/12 max-w-sm space-y-2" aria-live="polite"></div>
+
+  <!-- ==================== JAVASCRIPT LOGIKA AMAN (ANTI-XSS) ==================== -->
+  <script src="./app.js" defer></script>
+</body>
+</html>

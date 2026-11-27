@@ -1,0 +1,153 @@
+/* Palet Warna Utama Warung Seduh Rasa:
+   60% Putih Bersih #FFFFFF, 30% Krem Hangat #F5EFE6, 10% Coklat Kopi Tua #4A2C1D */
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-surface: #F5EFE6;
+  --bg-img-base: #EFE7DA;
+  --accent-coffee: #4A2C1D;
+  --accent-coffee-hover: #361F14;
+  --accent-warm: #7A4B31;
+  --text-main: #2B1A12;
+  --text-muted: #5C463A;
+  --border-warm: #E5D9C8;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif-title {
+  font-family: 'Lora', Georgia, 'Times New Roman', serif;
+}
+
+/* Utilitas Warna Kustom */
+.bg-warm-surface { background-color: var(--bg-surface); }
+.bg-img-base { background-color: var(--bg-img-base); }
+.bg-coffee { background-color: var(--accent-coffee); }
+.bg-coffee:hover { background-color: var(--accent-coffee-hover); }
+.bg-warm-accent { background-color: var(--accent-warm); }
+.text-coffee { color: var(--accent-coffee); }
+.text-warm-accent { color: var(--accent-warm); }
+.text-muted-warm { color: var(--text-muted); }
+.border-warm { border-color: var(--border-warm); }
+.border-coffee { border-color: var(--accent-coffee); }
+
+/* Scroll Progress Bar */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background-color: var(--accent-coffee);
+  z-index: 60;
+  transition: width 0.08s linear;
+}
+
+/* Sticky Navbar Adaptif */
+#main-header {
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+#main-header.scrolled {
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px -10px rgba(74, 44, 29, 0.16);
+}
+
+/* Tombol Ramah Sentuh (min-height 44px) */
+.btn-touch {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.btn-touch:active {
+  transform: scale(0.97);
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 3px solid rgba(74, 44, 29, 0.45);
+  outline-offset: 2px;
+}
+
+/* Foto Langsung Terlihat (opacity: 1) & Zoom Halus */
+.food-img {
+  opacity: 1;
+  background-color: var(--bg-img-base);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.menu-card:hover .food-img {
+  transform: scale(1.06);
+}
+
+/* ==================== ANIMASI SCROLL REVEAL ==================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animasi Drawer & Toast */
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.animate-drawer {
+  animation: slideInRight 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-toast {
+  animation: fadeInUp 0.22s ease-out forwards;
+}
+
+/* Floating Bar & Back to Top */
+.floating-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+.floating-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.floating-transition {
+  transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Dukung prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .food-img, .btn-touch, .floating-transition, #main-header {
+    transition: none !important;
+  }
+  .animate-drawer, .animate-toast {
+    animation: none !important;
+  }
+}
