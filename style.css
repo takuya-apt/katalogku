@@ -151,3 +151,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     animation: none !important;
   }
 }
+
+/* Animasi interaksi tombol */
+button {
+    transition: transform 0.2s ease;
+}
+
+button:active {
+    transform: scale(0.97);
+}
